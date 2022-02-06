@@ -1,4 +1,4 @@
-// Package annalyns implements functions fot a quest logic.
+// Package annalyn implements functions fot a quest logic.
 package annalyn
 
 // CanFastAttack returns if FastAttack can be executed.
