@@ -1,20 +1,17 @@
 package pangram
 
-import "unicode"
+import (
+	"strings"
+)
 
+// IsPangram determines if a sentence is a pangram.
 func IsPangram(input string) bool {
-	alphabet := map[rune]struct{}{
-		'a': {}, 'b': {}, 'c': {}, 'd': {}, 'e': {}, 'f': {}, 'g': {}, 'h': {},
-		'i': {}, 'j': {}, 'k': {}, 'm': {}, 'n': {}, 'o': {}, 'p': {}, 'r': {},
-		's': {}, 't': {}, 'v': {}, 'w': {}, 'x': {}, 'y': {}, 'z': {},
-	}
-
-	for _, ch := range input {
-		ch = unicode.ToLower(ch)
-		if _, e := alphabet[ch]; e {
-			delete(alphabet, ch)
+	input = strings.ToLower(input)
+	for ch := 'a'; ch <= 'z'; ch++ {
+		if !strings.ContainsRune(input, ch) {
+			return false
 		}
 	}
 
-	return len(alphabet) == 0
+	return true
 }
