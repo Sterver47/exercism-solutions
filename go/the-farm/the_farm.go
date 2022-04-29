@@ -17,19 +17,22 @@ func (err *SillyNephewError) Error() string {
 
 // DivideFood computes the fodder amount per cow for the given cows.
 func DivideFood(weightFodder WeightFodder, cows int) (float64, error) {
-	fa, err := weightFodder.FodderAmount()
-
-	switch {
-	case cows < 0:
-		return 0, &SillyNephewError{cows}
-	case cows == 0:
+	if cows == 0 {
 		return 0, errors.New("division by zero")
-	case err == ErrScaleMalfunction && fa > 0:
+	}
+	if cows < 0 {
+		return 0, &SillyNephewError{cows}
+	}
+
+	fa, err := weightFodder.FodderAmount()
+	if err == ErrScaleMalfunction {
 		fa *= 2
-	case fa < 0 && (err == nil || err == ErrScaleMalfunction):
-		return 0, errors.New("negative fodder")
-	case err != nil:
+	} else if err != nil {
 		return 0, err
+	}
+
+	if fa < 0 {
+		return 0, errors.New("negative fodder")
 	}
 
 	return fa / float64(cows), nil
