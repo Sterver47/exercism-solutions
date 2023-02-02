@@ -1,4 +1,6 @@
-// The Color type represents a color of a resistor.
+//// The Resistor module provides functions for working with resistors.
+
+/// The Color type represents a color of a resistor.
 pub type Color {
   Black
   Brown
@@ -12,7 +14,7 @@ pub type Color {
   White
 }
 
-// Function code returns the numeric code for a color.
+/// Function code returns the numeric code for a color.
 pub fn code(color: Color) -> Int {
   case color {
     Black -> 0
@@ -28,7 +30,7 @@ pub fn code(color: Color) -> Int {
   }
 }
 
-// Function colors returns a list of all colors.
+/// Function colors returns a list of all colors.
 pub fn colors() -> List(Color) {
   [Black, Brown, Red, Orange, Yellow, Green, Blue, Violet, Grey, White]
 }
