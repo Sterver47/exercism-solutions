@@ -5,22 +5,22 @@ import gleam/iterator
 /// Returns the sum of the squares of the first n natural numbers.
 /// (1 + 2 + ... + 10)² = 55² = 3025.
 pub fn square_of_sum(n: Int) -> Int {
-  /// Create an iterator of the first n natural numbers starting from 1.
+  // Create an iterator of the first n natural numbers starting from 1.
   iterator.range(1, n)
-    /// Sum the first n natural numbers.
+    // Sum the first n natural numbers.
     |> iterator.fold(from: 0, with: fn(acc, element) { acc + element })
-    /// Square the sum.
+    // Square the sum.
     |> fn(sum) { sum * sum }
 }
 
 /// Returns the square of the sum of the first n natural numbers.
 /// (1² + 2² + ... + 10²) = 385.
 pub fn sum_of_squares(n: Int) -> Int {
-  /// Create an iterator of the first n natural numbers starting from 1.
+  // Create an iterator of the first n natural numbers starting from 1.
   iterator.range(1, n)
-    /// Square each element.
+    // Square each element.
     |> iterator.map(fn(element) { element * element })
-    /// Sum the squares.
+    // Sum the squares.
     |> iterator.fold(from: 0, with: fn(sum, element) { sum + element })
 }
 
