@@ -1,0 +1,18 @@
+{
+  "authors": [
+    "czrpb"
+  ],
+  "files": {
+    "solution": [
+      "matching-brackets.rkt"
+    ],
+    "test": [
+      "matching-brackets-test.rkt"
+    ],
+    "example": [
+      ".meta/example.rkt"
+    ]
+  },
+  "blurb": "Make sure the brackets and braces all match.",
+  "source": "Ginna Baker"
+}
