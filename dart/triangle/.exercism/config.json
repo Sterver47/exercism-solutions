@@ -1,0 +1,23 @@
+{
+  "authors": [
+    "amscotti"
+  ],
+  "contributors": [
+    "Zureka",
+    "kytrinyx"
+  ],
+  "files": {
+    "solution": [
+      "lib/triangle.dart"
+    ],
+    "test": [
+      "test/triangle_test.dart"
+    ],
+    "example": [
+      ".meta/lib/example.dart"
+    ]
+  },
+  "blurb": "Determine if a triangle is equilateral, isosceles, or scalene.",
+  "source": "The Ruby Koans triangle project, parts 1 & 2",
+  "source_url": "https://web.archive.org/web/20220831105330/http://rubykoans.com"
+}
