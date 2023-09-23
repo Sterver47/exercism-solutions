@@ -1,0 +1,25 @@
+{
+  "authors": [
+    "bistik"
+  ],
+  "contributors": [
+    "dnmfarrell",
+    "kytrinyx",
+    "m-dango",
+    "rfilipo"
+  ],
+  "files": {
+    "solution": [
+      "AtbashCipher.pm"
+    ],
+    "test": [
+      "atbash-cipher.t"
+    ],
+    "example": [
+      ".meta/solutions/AtbashCipher.pm"
+    ]
+  },
+  "blurb": "Create an implementation of the atbash cipher, an ancient encryption system created in the Middle East.",
+  "source": "Wikipedia",
+  "source_url": "https://en.wikipedia.org/wiki/Atbash"
+}
