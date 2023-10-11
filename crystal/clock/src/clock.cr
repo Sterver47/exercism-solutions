@@ -1,5 +1,5 @@
 class Clock
-  protected getter(total_minutes : Int32)
+  getter total_minutes : Int32
 
   def initialize(hour : Int32 = 0, minute : Int32 = 0) : Nil
     @total_minutes = (minute + hour * 60) % 1440
@@ -11,7 +11,7 @@ class Clock
 
   {% for name in %w{+ -} %}
     def {{name.id}}(other : Clock) : Clock
-      self.class.new(minute: (total_minutes {{name.id}} other.total_minutes) % 1440)
+      self.class.new(minute: (total_minutes {{name.id}} other.total_minutes))
     end
   {% end %}
 
