@@ -6,7 +6,7 @@ class SimpleCipher
   end
 
   def initialize(@key : String) : Nil
-    if @key.size == 0 || @key =~ /[^a-z]/
+    if @key.empty? || @key =~ /[^a-z]/
       raise ArgumentError.new("Key must be all lowercase letters")
     end
   end
