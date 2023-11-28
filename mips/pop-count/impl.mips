@@ -1,0 +1,14 @@
+# | Register | Usage     | Type    | Description                |
+# | -------- | --------- | ------- | -------------------------- |
+# | `$a0`    | input     | integer | input number               |
+# | `$v0`    | output    | integer | number of eggs (set bits)  |
+# | `$t0-9`  | temporary | any     | used for temporary storage |
+.globl egg_count
+egg_count:
+        li      $v0, 0             # (Load Immediate) Initialize $v0 to 0 to count the set bits (eggs)
+count_loop:                        # Label count_loop for the start of the loop
+        andi    $t0, $a0, 1        # (And Immediate) Isolate the least significant (most right) bit of $a0 to $t0 // $t0 = $a0 & 1
+        add     $v0, $v0, $t0      # (Add) Add the value of $t0 (0 or 1) to $v0 // $v0 = $v0 + $t0
+        srl     $a0, $a0, 1        # (Shift Right Logical) Logical right shift the $a0 by 1 and store the value in $a0 (example: 1011 >>> 1 = 0101)
+        bnez    $a0, count_loop    # (Branch if Not Equal Zero) Branch to count_loop (continue the loop) if $a0 is not zero
+        jr      $ra                # Return from the function
