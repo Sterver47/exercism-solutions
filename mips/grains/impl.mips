@@ -1,0 +1,38 @@
+# | Register | Usage     | Type    | Description                      |
+# | -------- | --------- | ------- | -------------------------------- |
+# | `$a0`    | input     | integer | square number in the range 1..64 |
+# | `$v0`    | output    | integer | low 32 bits of output            |
+# | `$v1`    | output    | integer | high 32 bits of output           |
+# | `$t0-9`  | temporary | any     | for temporary storage            |
+
+.globl square
+
+square:
+        # Clear output register
+        move    $v0, $zero              # Set lower bits of output to 0
+        move    $v1, $zero              # Set upper bits of output to 0
+
+        # Check if the input is out of range
+        blez    $a0, out_of_range       # Jump to out_of_range if $a0 <= 0
+        bgt     $a0, 64, out_of_range   # Jump to out_of_range if $a0 > 64
+
+        # Prepare for calculation
+        sub     $a0, $a0, 1             # Decrement $a0 by 1 to adjust range
+        li      $t1, 1                  # Load immediate 1 into $t1 for shifting
+
+        # Determine whether to calculate lower or upper bits
+        blt     $a0, 32, lower_bits     # Jump to lower_bits if $a0 < 32
+
+        # Calculate upper 32 bits of 2^($a0-1)
+        sub     $t0, $a0, 32            # Adjust $a0 for upper bits calculation
+        sllv    $v1, $t1, $t0           # Shift 1 left by $t0, store in $v1 (upper bits)
+        jr      $ra                     # Return from the function
+
+lower_bits:
+        # Calculate lower 32 bits of 2^($a0-1)
+        sllv    $v0, $t1, $a0           # Shift 1 left by $a0, store in $v0 (lower bits)
+        jr      $ra                     # Return from the function
+
+out_of_range:
+        # Handle out of range input, return with $v0 and $v1 set to 0
+        jr      $ra                     # Return from the function
