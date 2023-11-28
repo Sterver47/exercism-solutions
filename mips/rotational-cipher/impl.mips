@@ -1,0 +1,42 @@
+# | Register | Usage        | Type    | Description                   |
+# | -------- | ------------ | ------- | ----------------------------- |
+# | `$a0`    | input        | address | null-terminated input string  |
+# | `$a1`    | input        | integer | shift key                     |
+# | `$a2`    | input/output | address | null-terminated result string |
+# | `$t0-9`  | temporary    | any     | for temporary storage         |
+
+.globl rotate
+
+rotate:
+loop:
+        lb   $t1, 0($a0)            # Load byte from input string pointed by $a0 into $t1
+        beq  $t1, $zero, end        # If byte is null (end of string), jump to end
+        blt  $t1, 97, check_upper   # If byte is less than 'a', check if it's uppercase
+        bgt  $t1, 122, skip         # If byte is greater than 'z', go to skip
+
+        sub  $t1, $t1, 97           # Convert lowercase ASCII to 0-25 range
+        add  $t1, $t1, $a1          # Add shift key value
+        rem  $t1, $t1 26            # Modulo 26 to wrap around alphabet
+        add  $t1, $t1, 97           # Convert back to lowercase ASCII
+
+        j    skip                   # Jump to skip (to store and iterate)
+
+check_upper:
+        blt  $t1, 65, skip          # If byte is less than 'A', go to skip
+        bgt  $t1, 90, skip          # If byte is greater than 'Z', go to skip
+
+        sub  $t1, $t1, 65           # Convert uppercase ASCII to 0-25 range
+        add  $t1, $t1, $a1          # Add shift key value
+        rem  $t1, $t1, 26           # Modulo 26 to wrap around alphabet
+        add  $t1, $t1, 65           # Convert back to uppercase ASCII
+
+skip:
+        sb   $t1, 0($a2)            # Store processed byte in result string pointed by $a2
+        addi $a0, $a0, 1            # Increment input string pointer
+        addi $a2, $a2, 1            # Increment result string pointer
+
+        j    loop                   # Jump back to the start of the loop
+
+end:
+        sb   $zero, 0($a2)          # Null-terminate the result string
+        jr   $ra                    # Return from the function
