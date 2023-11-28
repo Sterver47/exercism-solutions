@@ -1,0 +1,47 @@
+# | Register | Usage     | Type    | Description                     |
+# | -------- | --------- | ------- | ------------------------------- |
+# | `$a0`    | input     | address | color as null-terminated string |
+# | `$v0`    | output    | integer | resistor value                  |
+# | `$t0-9`  | temporary | any     | for temporary storage           |
+
+.globl color_code
+
+color_code:
+        li   $t9, 0                   # Initialize $v1 to 0 (this will hold the integer interpretation of first 4 characters of the given color)
+        li   $t1, 0                   # Initialize loop counter
+
+loop:
+        lb   $t0, 0($a0)              # Load the current character
+        beq  $t0, $zero, continue     # If it's a null terminator, end the loop
+        sll  $t9, $t9, 8              # Shift left $v1 by 8 bits
+        or   $t9, $t9, $t0            # Combine character into $v1
+
+        addi  $a0, $a0, 1             # Move to the next character
+        addi  $t1, $t1, 1             # Increment loop counter
+        bgt   $t1, 3, continue        # If we have processed 4 characters, end the loop
+        j     loop                    # Jump back to the start of the loop
+
+continue:
+        li    $v0, 0
+        beq   $t9, 1651269987, return # Black
+        li    $v0, 1
+        beq   $t9, 1651666807, return # Brown
+        li    $v0, 2
+        beq   $t9, 1919247360, return # Red
+        li    $v0, 3
+        beq   $t9, 1869767022, return # Orange
+        li    $v0, 4
+        beq   $t9, 2036690028, return # Yellow
+        li    $v0, 5
+        beq   $t9, 1735550309, return # Green
+        li    $v0, 6
+        beq   $t9, 1651275109, return # Blue
+        li    $v0, 7
+        beq   $t9, 1986621292, return # Violet
+        li    $v0, 8
+        beq   $t9, 1735550329, return # Grey
+        li    $v0, 9
+        beq   $t9, 2003331444, return # White
+
+return:
+        jr    $ra
